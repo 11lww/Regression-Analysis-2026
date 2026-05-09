@@ -102,4 +102,29 @@ def analysis(df):
     print("\n### 回归总结")
     print(model.summary())
    
-    
+    import numpy as np
+from data_generator import generate_X
+
+def ols(X, y):
+    return np.linalg.inv(X.T @ X) @ X.T @ y
+
+def monte_carlo(rho, n_sim=1000, n=100):
+    beta_true = np.array([5.0, 3.0])
+    sigma = 2.0
+
+    X = generate_X(n, rho)
+
+    betas = []
+
+    for _ in range(n_sim):
+        eps = np.random.normal(0, sigma, n)
+        y = X @ beta_true + eps
+        beta_hat = ols(X, y)
+        betas.append(beta_hat)
+
+    return np.array(betas), X
+
+def covariance_analysis(betas, X, sigma=2.0):
+    empirical = np.cov(betas.T)
+    theoretical = sigma**2 * np.linalg.inv(X.T @ X)
+    return empirical, theoretical

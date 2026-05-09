@@ -1,4 +1,19 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environment
+.venv/
+venv/
+
+# VSCode
+.vscode/
+
+# System
 .DS_Store
+
+# Data / results
+*.png.DS_Store
 *.pdf
 
 # 补充虚拟环境的常见命名
